@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_componente_enlaces",
+  "info": {
+    "displayName": "Enlace",
+    "icon": "dashboard"
+  },
+  "options": {},
+  "attributes": {
+    "href": {
+      "type": "string",
+      "default": "#",
+      "required": true
+    },
+    "label": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_layout_hero_sections",
+  "info": {
+    "displayName": "HeroSection",
+    "icon": "apps"
+  },
+  "options": {},
+  "attributes": {
+    "Image_hero": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "Header": {
+      "type": "string",
+      "required": true
+    },
+    "Sub_header": {
+      "type": "text"
+    },
+    "enlace": {
+      "type": "component",
+      "component": "componente.enlace",
+      "repeatable": false
+    }
+  },
+  "config": {}
+}
