@@ -1,32 +1,13 @@
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { Suspense } from "react";
 import LoginForm from "@/components/ui/login-form";
-import { NEXT_PUBLIC_STRAPI_URL } from "@/lib/strapi";
+import { LoginRedirectGate } from "./redirect-gate";
 
 export default async function LoginPage() {
-  const cookieStore = await cookies();
-  const jwt = cookieStore.get("jwt")?.value;
-
-  if (jwt) {
-    try {
-      const response = await fetch(`${NEXT_PUBLIC_STRAPI_URL}/api/users/me`, {
-        headers: {
-          Authorization: `Bearer ${jwt}`,
-          "Content-Type": "application/json",
-        },
-        cache: "no-store",
-      });
-
-      if (response.ok) {
-        redirect("/dashboard");
-      }
-    } catch (error) {
-      console.error("Login redirect validation failed:", error);
-    }
-  }
-
   return (
     <div>
+      <Suspense fallback={null}>
+        <LoginRedirectGate />
+      </Suspense>
       <LoginForm />
     </div>
   );
