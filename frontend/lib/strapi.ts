@@ -1,6 +1,14 @@
 import qs from 'qs'
 
-export const BASE_URL = 'http://127.0.0.1:1337';
+
+function getStrapiBaseURL() {
+  const raw = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://127.0.0.1:1337'
+  // On some systems, `localhost` resolves to IPv6 (`::1`) while Strapi listens on IPv4 only.
+  return raw.replace('://localhost', '://127.0.0.1').replace('://[::1]', '://127.0.0.1')
+}
+
+// Backwards-compatible export (used by UI helpers to build media URLs).
+export const NEXT_PUBLIC_STRAPI_URL = getStrapiBaseURL()
 
 // Strapi v4 expects relational/dynamic-zone expansion via `populate` in the querystring,
 
@@ -25,14 +33,16 @@ export async function getHomePage(){
 export async function getStrapiData(url: string){
 
 try
-  {    const response = await fetch(`${BASE_URL}${url}`);
+  {
+    const baseURL = getStrapiBaseURL()
+    const fullURL = new URL(url, baseURL).toString()
+    const response = await fetch(fullURL);
 
   if (!response.ok) {
   const body = await response.text();
   throw new Error(`Strapi error ${response.status} ${response.statusText} | ${response.url} | ${body}`);
 }
     const data = await response.json();
-    console.log(JSON.stringify(data, null, 2)) // Log the entire response data;
      return data
   } catch (error) {
     console.error('Error al traer informacion de strapi:', error);
@@ -42,7 +52,7 @@ try
 }
 
 export async function RegisterUserService(userData:object) {
-  const url = `${BASE_URL}/api/auth/local/register`;
+  const url = new URL('/api/auth/local/register', getStrapiBaseURL()).toString();
 
   try {
     const response = await fetch(url, {
@@ -81,7 +91,7 @@ export async function RegisterUserService(userData:object) {
 }
 
 export async function LoginUserService(userData:object) {
-  const url = `${BASE_URL}/api/auth/local`; 
+  const url = new URL('/api/auth/local', getStrapiBaseURL()).toString();
 
   try {
     const response = await fetch(url, {

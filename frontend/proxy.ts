@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { BASE_URL } from "./lib/strapi";
+import { NEXT_PUBLIC_STRAPI_URL } from "./lib/strapi";
 
 function isProtectedRoute(pathname: string) {
     return pathname === "/dashboard" || pathname.startsWith("/dashboard/");
@@ -18,7 +18,7 @@ export async function proxy(request: NextRequest) {
             return NextResponse.redirect(new URL("/login", request.url));
         }
 
-        const response = await fetch(`${BASE_URL}/api/users/me`, {
+        const response = await fetch(`${NEXT_PUBLIC_STRAPI_URL}/api/users/me`, {
             headers: {
                 Authorization: `Bearer ${jwt}`,
                 "Content-Type": "application/json",

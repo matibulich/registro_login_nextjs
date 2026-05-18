@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BASE_URL } from "@/lib/strapi";
+import { NEXT_PUBLIC_STRAPI_URL } from "@/lib/strapi";
 
 type HeroSectionData = {
   Header?: string;
@@ -11,7 +11,7 @@ type HeroSectionData = {
 function resolveStrapiMediaUrl(url?: string) {
   if (!url) return undefined;
   if (url.startsWith("http://") || url.startsWith("https://")) return url;
-  return `${BASE_URL}${url}`;
+  return `${NEXT_PUBLIC_STRAPI_URL}${url}`;
 }
 
 export function HeroSection({ data }: { readonly data: HeroSectionData | null }) {
