@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import LoginForm from "@/components/ui/login-form";
-import { BASE_URL } from "@/lib/strapi";
+import { NEXT_PUBLIC_STRAPI_URL } from "@/lib/strapi";
 
 export default async function LoginPage() {
   const cookieStore = await cookies();
@@ -9,7 +9,7 @@ export default async function LoginPage() {
 
   if (jwt) {
     try {
-      const response = await fetch(`${BASE_URL}/api/users/me`, {
+      const response = await fetch(`${NEXT_PUBLIC_STRAPI_URL}/api/users/me`, {
         headers: {
           Authorization: `Bearer ${jwt}`,
           "Content-Type": "application/json",
