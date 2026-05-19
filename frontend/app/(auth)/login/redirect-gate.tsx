@@ -8,20 +8,23 @@ export async function LoginRedirectGate() {
 
   if (!jwt) return null;
 
+  let response;
+
   try {
-    const response = await fetch(`${NEXT_PUBLIC_STRAPI_URL}/api/users/me`, {
+    response = await fetch(`${NEXT_PUBLIC_STRAPI_URL}/api/users/me`, {
       headers: {
         Authorization: `Bearer ${jwt}`,
         "Content-Type": "application/json",
       },
       cache: "no-store",
     });
-
-    if (response.ok) {
-      redirect("/dashboard");
-    }
   } catch (error) {
-    console.error("Login redirect validation failed:", error);
+    console.error("Login validation failed:", error);
+    return null;
+  }
+
+  if (response.ok) {
+    redirect("/dashboard");
   }
 
   return null;
