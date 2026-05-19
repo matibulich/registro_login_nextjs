@@ -62,8 +62,6 @@ URL base del backend de Strapi que consume el frontend (debe incluir protocolo),
 
 Si no está definida, el frontend usa `http://127.0.0.1:1337` como fallback.
 
-> Nota: Al tener el prefijo `NEXT_PUBLIC_`, Next.js la expone al código que corre en el navegador.
-
 ## Variables de entorno (backend)
 
 Copiá `backend/.env.example` a `backend/.env` y completá:
